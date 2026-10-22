@@ -20,7 +20,7 @@ export default function HowSection() {
 
         {/* Two steps */}
         <div className="flex flex-col gap-8">
-          {/* Step 1 */}
+          {/* Step 1: Real Native Radial Menu Screenshot */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center rounded-[20px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
             <div className="p-8 sm:p-10">
               <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--blue-soft)] text-[var(--blue)] text-[0.8rem] font-bold mb-5">
@@ -30,51 +30,31 @@ export default function HowSection() {
                 Shift-drag. Pick a slice.
               </h3>
               <p className="text-[var(--muted)] text-[0.975rem] leading-relaxed mb-6">
-                Hold Shift while dragging in Finder or Desktop. The radial menu appears anchored to your cursor. Tap a number key or click a slice to convert instantly.
+                Hold Shift while dragging in Finder or on your Desktop. The native radial HUD blooms directly anchored to your cursor. Tap hotkeys <kbd className="font-mono text-xs px-1.5 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)]">1</kbd>–<kbd className="font-mono text-xs px-1.5 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)]">3</kbd> or release on a node to convert in place.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Shift · open", "1–9 · trigger", "Esc · dismiss", "⌘Z · undo"].map((k) => (
+                {["Shift · open", "1–8 · trigger", "Esc · dismiss", "⌘Z · undo"].map((k) => (
                   <span key={k} className="keychip">{k}</span>
                 ))}
               </div>
             </div>
 
-            {/* Radial preview */}
-            <div className="p-8 sm:p-10 flex items-center justify-center" style={{ background: "var(--bg-soft)", borderLeft: "1px solid var(--line)" }}>
-              <div className="relative">
-                <svg viewBox="0 0 200 200" width="220" height="220" className="drop-shadow-xl">
-                  {[
-                    { path: "M100,100 L100,22 A78,78 0 0,1 155,45 Z",   fill: "var(--slice-on)",  label: "WebP",  tx: 128, ty: 43 },
-                    { path: "M100,100 L155,45 A78,78 0 0,1 178,100 Z",  fill: "var(--slice)",     label: "JPEG",  tx: 155, ty: 73 },
-                    { path: "M100,100 L178,100 A78,78 0 0,1 155,155 Z", fill: "var(--slice)",     label: "PDF",   tx: 153, ty: 129 },
-                    { path: "M100,100 L155,155 A78,78 0 0,1 100,178 Z", fill: "var(--slice)",     label: "50%",   tx: 116, ty: 162 },
-                    { path: "M100,100 L100,178 A78,78 0 0,1 45,155 Z",  fill: "var(--slice)",     label: "MP3",   tx: 53,  ty: 162 },
-                    { path: "M100,100 L45,155 A78,78 0 0,1 22,100 Z",   fill: "var(--slice)",     label: "HEIC",  tx: 28,  ty: 129 },
-                    { path: "M100,100 L22,100 A78,78 0 0,1 45,45 Z",    fill: "var(--slice)",     label: "EXIF",  tx: 31,  ty: 73 },
-                    { path: "M100,100 L45,45 A78,78 0 0,1 100,22 Z",    fill: "var(--slice)",     label: "Copy",  tx: 63,  ty: 43 },
-                  ].map((s) => (
-                    <g key={s.label}>
-                      <path d={s.path} fill={s.fill} stroke="var(--line)" strokeWidth="0.5" />
-                      <text x={s.tx} y={s.ty} textAnchor="middle" dominantBaseline="middle"
-                        fill={s.fill === "var(--slice-on)" ? "var(--slice-t-on)" : "var(--slice-t)"}
-                        fontSize="11" fontWeight="700" fontFamily="inherit" className="pointer-events-none select-none"
-                      >
-                        {s.label}
-                      </text>
-                    </g>
-                  ))}
-                  <circle cx="100" cy="100" r="30" fill="var(--elev)" stroke="var(--line)" strokeWidth="1" />
-                  <text x="100" y="104" textAnchor="middle" fill="var(--muted)" fontSize="10" fontWeight="700" fontFamily="inherit">Shift</text>
-                </svg>
-                {/* Animated ring pulse */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-[220px] h-[220px] rounded-full border-2 border-[var(--blue)] opacity-20 animate-ping" style={{ animationDuration: "2.5s" }} />
+            {/* Real Screenshot Preview */}
+            <div className="p-4 sm:p-6 flex items-center justify-center overflow-hidden bg-[#0c0d12] relative min-h-[280px]">
+              <div className="relative w-full max-w-[340px] rounded-xl overflow-hidden shadow-2xl border border-white/10 group">
+                <img
+                  src="/screenshots/radial-menu.png"
+                  alt="Real Native Fettle Radial HUD"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-semibold text-white/90 border border-white/10">
+                  Native macOS HUD
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Step 2 */}
+          {/* Step 2: Action Picker */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center rounded-[20px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
             {/* Action picker mock */}
             <div className="p-8 sm:p-10 flex items-center justify-center order-last md:order-first" style={{ background: "var(--bg-soft)", borderRight: "1px solid var(--line)" }}>

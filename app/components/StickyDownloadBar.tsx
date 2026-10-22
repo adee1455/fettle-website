@@ -25,8 +25,12 @@ export default function StickyDownloadBar({ onDownloadClick }: StickyDownloadBar
       <div className="container h-[60px] flex items-center gap-3">
         {/* Product line — hidden on small screens */}
         <div className="hidden sm:flex items-center gap-3 mr-auto">
-          <div className="w-7 h-7 rounded-[7px] flex items-center justify-center bg-[var(--fg)]">
-            <span className="text-[var(--bg)] font-black text-[11px]">F</span>
+          <div className="w-7 h-7 rounded-[7px] overflow-hidden shrink-0 shadow-xs">
+            <img
+              src="/app-icon.png"
+              alt="Fettle App Icon"
+              className="w-full h-full object-cover"
+            />
           </div>
           <span className="text-[0.85rem] text-[var(--muted)]">
             <strong className="text-[var(--fg)] font-semibold">Fettle</strong> · Free forever · Desktop + Finder

@@ -47,9 +47,13 @@ export default function Navbar({ onDownloadClick }: NavbarProps) {
             href="/"
             className="flex items-center gap-3 mr-auto group"
           >
-            {/* Logo mark */}
-            <div className="relative w-9 h-9 rounded-[10px] bg-[var(--fg)] flex items-center justify-center shrink-0 shadow-[var(--shadow-sm)] group-hover:scale-105 transition-transform duration-200">
-              <span className="text-[var(--bg)] font-black text-[15px] tracking-tight leading-none">F</span>
+            {/* Real Fettle App Icon */}
+            <div className="relative w-9 h-9 rounded-[10px] overflow-hidden shrink-0 shadow-[var(--shadow-sm)] group-hover:scale-105 transition-transform duration-200">
+              <img
+                src="/app-icon.png"
+                alt="Fettle App Icon"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="flex items-center gap-2.5">
               <span className="font-bold text-[17px] tracking-[-0.03em] text-[var(--fg)]">
