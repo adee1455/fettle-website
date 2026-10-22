@@ -16,14 +16,14 @@ const FILES: FileItem[] = [
 ];
 
 const SLICES = [
-  { id: "webp", label: "WebP", out: "webp", path: "M100,100 L100,18 A82,82 0 0,1 158,42 Z", tx: 128, ty: 46 },
-  { id: "jpeg", label: "JPEG", out: "jpeg", path: "M100,100 L158,42 A82,82 0 0,1 182,100 Z", tx: 154, ty: 76 },
-  { id: "pdf", label: "PDF", out: "pdf", path: "M100,100 L182,100 A82,82 0 0,1 158,158 Z", tx: 150, ty: 130 },
-  { id: "50%", label: "50%", out: "50%", path: "M100,100 L158,158 A82,82 0 0,1 100,182 Z", tx: 118, ty: 162 },
-  { id: "mp3", label: "MP3", out: "mp3", path: "M100,100 L100,182 A82,82 0 0,1 42,158 Z", tx: 56, ty: 162 },
-  { id: "heic", label: "HEIC", out: "heic", path: "M100,100 L42,158 A82,82 0 0,1 18,100 Z", tx: 30, ty: 130 },
-  { id: "exif", label: "EXIF", out: "exif", path: "M100,100 L18,100 A82,82 0 0,1 42,42 Z", tx: 34, ty: 76 },
-  { id: "merge", label: "Merge", out: "merge", path: "M100,100 L42,42 A82,82 0 0,1 100,18 Z", tx: 66, ty: 46 },
+  { id: "webp", label: "WebP",  out: "webp",  path: "M100,100 L100,18 A82,82 0 0,1 158,42 Z",  tx: 128, ty: 45 },
+  { id: "jpeg", label: "JPEG",  out: "jpeg",  path: "M100,100 L158,42 A82,82 0 0,1 182,100 Z", tx: 156, ty: 74 },
+  { id: "pdf",  label: "PDF",   out: "pdf",   path: "M100,100 L182,100 A82,82 0 0,1 158,158 Z", tx: 153, ty: 130 },
+  { id: "50%",  label: "50%",   out: "50%",   path: "M100,100 L158,158 A82,82 0 0,1 100,182 Z", tx: 117, ty: 163 },
+  { id: "mp3",  label: "MP3",   out: "mp3",   path: "M100,100 L100,182 A82,82 0 0,1 42,158 Z",  tx: 54,  ty: 163 },
+  { id: "heic", label: "HEIC",  out: "heic",  path: "M100,100 L42,158 A82,82 0 0,1 18,100 Z",  tx: 28,  ty: 130 },
+  { id: "exif", label: "EXIF",  out: "exif",  path: "M100,100 L18,100 A82,82 0 0,1 42,42 Z",   tx: 32,  ty: 74 },
+  { id: "dup",  label: "Copy",  out: "copy",  path: "M100,100 L42,42 A82,82 0 0,1 100,18 Z",   tx: 65,  ty: 45 },
 ];
 
 export default function DesktopStage() {
@@ -33,118 +33,132 @@ export default function DesktopStage() {
   const [toastTitle, setToastTitle] = useState<string | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  const playClickSound = (freq = 640) => {
+  const playTone = (freq = 640, type: OscillatorType = "sine", dur = 0.08) => {
     try {
       if (!audioCtxRef.current) {
-        const AudioClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        audioCtxRef.current = new AudioClass();
+        const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        audioCtxRef.current = new AC();
       }
       const ctx = audioCtxRef.current;
       if (ctx.state === "suspended") ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = "sine";
+      osc.type = type;
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
       gain.gain.setValueAtTime(0.06, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
-      osc.stop(ctx.currentTime + 0.08);
-    } catch {
-      // Audio not supported or blocked
-    }
+      osc.stop(ctx.currentTime + dur);
+    } catch {}
   };
 
-  const handleConvert = (outFormat: string) => {
-    playClickSound(880);
-    const baseName = selectedFile.name.replace(/\.[^.]+$/, "");
-    setToastTitle(`Converted · ${baseName}.${outFormat}`);
+  const handleConvert = (outFmt: string) => {
+    playTone(880, "sine", 0.12);
+    const base = selectedFile.name.replace(/\.[^.]+$/, "");
+    setToastTitle(`Converted · ${base}.${outFmt}`);
     setIsOpen(false);
 
     try {
-      confetti({
-        particleCount: 30,
-        spread: 50,
-        origin: { y: 0.65 },
-        colors: ["#2B6BFF", "#4C82FF", "#0D8A55", "#FF6154"],
-      });
+      confetti({ particleCount: 35, spread: 55, origin: { y: 0.7 },
+        colors: ["#2563EB", "#4B79FF", "#0D8A55", "#FF6154", "#FEBC2E"] });
     } catch {}
 
-    setTimeout(() => {
-      setToastTitle(null);
-    }, 2800);
+    setTimeout(() => setToastTitle(null), 3000);
   };
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Shift" && !isOpen) {
-        setIsOpen(true);
-        playClickSound(520);
-      }
-      if (e.key === "Escape") {
-        setIsOpen(false);
-      }
-      const num = parseInt(e.key, 10);
-      if (num >= 1 && num <= 8) {
-        const target = SLICES[num - 1];
-        if (target) handleConvert(target.out);
-      }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Shift" && !isOpen) { setIsOpen(true); playTone(520, "triangle", 0.06); }
+      if (e.key === "Escape") setIsOpen(false);
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 8) handleConvert(SLICES[n - 1].out);
     };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, selectedFile]);
 
   return (
-    <div className="w-[min(880px,calc(100%-24px))] mx-auto mt-9" id="try">
-      <div className="bg-[var(--win)] rounded-[14px] overflow-hidden border border-[var(--line)] shadow-[var(--shadow)]">
+    <section className="pt-4 pb-8" id="try">
+      {/* Section label */}
+      <div className="container mb-6 text-center">
+        <p className="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-[var(--faint)]">
+          Interactive Demo
+        </p>
+      </div>
+
+      {/* Mac window */}
+      <div className="w-[min(920px,calc(100%-32px))] mx-auto rounded-[20px] overflow-hidden shadow-[var(--shadow-xl)] border border-[var(--line)]" style={{ background: "var(--win)" }}>
         {/* Titlebar */}
-        <div className="h-10 bg-[var(--win-bar)] border-b border-[var(--line)] flex items-center gap-2 px-3.5 relative">
-          <div className="flex gap-1.5">
-            <i className="w-[11px] h-[11px] rounded-full bg-[#FF5F57] block border border-black/10" />
-            <i className="w-[11px] h-[11px] rounded-full bg-[#FEBC2E] block border border-black/10" />
-            <i className="w-[11px] h-[11px] rounded-full bg-[#28C840] block border border-black/10" />
+        <div className="h-11 flex items-center gap-2.5 px-4 border-b border-[var(--line)] relative" style={{ background: "var(--win-bar)" }}>
+          <div className="flex gap-2 z-10">
+            <span className="w-3 h-3 rounded-full bg-[#FF5F57] border border-black/[0.08] block" />
+            <span className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-black/[0.08] block" />
+            <span className="w-3 h-3 rounded-full bg-[#28C840] border border-black/[0.08] block" />
           </div>
-          <em className="absolute left-1/2 -translate-x-1/2 not-italic text-[0.72rem] font-medium text-[var(--muted)]">
-            Desktop — try it
-          </em>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="text-[0.72rem] font-medium text-[var(--muted)]">Desktop — try it</span>
+          </div>
+          <div className="ml-auto z-10 flex items-center gap-1.5">
+            {FILES.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => setSelectedFile(f)}
+                className={`px-2.5 py-0.5 rounded text-[0.65rem] font-bold transition-all cursor-pointer ${
+                  selectedFile.id === f.id
+                    ? "bg-[var(--blue)] text-white"
+                    : "bg-[var(--line)] text-[var(--muted)] hover:text-[var(--fg)]"
+                }`}
+              >
+                {f.type}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Desk Surface */}
+        {/* Desktop canvas */}
         <div
           onClick={(e) => {
-            const target = e.target as HTMLElement;
-            if (target.closest(".file-card") || target.closest(".radial-menu")) return;
+            const t = e.target as HTMLElement;
+            if (t.closest(".file-card") || t.closest(".radial-wheel")) return;
             setIsOpen(!isOpen);
-            playClickSound(520);
+            playTone(520, "triangle", 0.06);
           }}
-          className="min-h-[400px] bg-[var(--desk)] relative overflow-hidden select-none cursor-default"
+          className="relative min-h-[460px] cursor-default select-none"
+          style={{ background: "var(--desk)" }}
         >
-          {/* Sample Files on Desktop */}
-          <div className="absolute top-7 left-7 flex flex-col gap-3.5 z-10">
+          {/* Files column */}
+          <div className="absolute top-8 left-8 flex flex-col gap-5 z-10">
             {FILES.map((f) => {
-              const isSelected = selectedFile.id === f.id;
+              const selected = selectedFile.id === f.id;
+              const colors: Record<string, string> = { PNG: "#2563EB", MP4: "#7C3AED", PDF: "#DC2626" };
               return (
                 <div
                   key={f.id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedFile(f);
-                    playClickSound(600);
-                  }}
-                  className="w-[60px] text-center text-[0.62rem] text-[var(--muted)] cursor-pointer file-card group"
+                  onClick={(e) => { e.stopPropagation(); setSelectedFile(f); playTone(600, "sine", 0.05); }}
+                  className="file-card w-[68px] text-center cursor-pointer group"
                 >
+                  {/* File icon */}
                   <div
-                    className={`w-[42px] h-[52px] mx-auto mb-1.5 rounded-[7px] bg-[var(--elev)] border border-[var(--line)] shadow-[0_6px_16px_rgba(0,0,0,0.08)] grid place-items-end justify-center pb-1.5 text-[0.55rem] font-bold text-[var(--blue)] transition-all ${
-                      isSelected
-                        ? "outline-2 outline-[var(--blue)] outline-offset-2"
-                        : "group-hover:border-[var(--muted)]"
+                    className={`relative w-[48px] h-[60px] mx-auto mb-2 rounded-[9px] shadow-[var(--shadow-sm)] flex flex-col items-center justify-end pb-2 transition-all duration-150 ${
+                      selected
+                        ? "ring-2 ring-[var(--blue)] ring-offset-2 ring-offset-[var(--desk)] scale-105"
+                        : "hover:scale-105"
                     }`}
+                    style={{ background: "var(--elev)", border: "1px solid var(--line)" }}
                   >
-                    {f.type}
+                    {/* Corner fold */}
+                    <div className="absolute top-0 right-0 w-3.5 h-3.5 bg-[var(--bg-soft)] border-b border-l border-[var(--line)] rounded-bl-[4px]" />
+                    <span
+                      className="text-[0.55rem] font-black tracking-wide"
+                      style={{ color: colors[f.type] || "var(--blue)" }}
+                    >
+                      {f.type}
+                    </span>
                   </div>
-                  <span className={isSelected ? "font-semibold text-[var(--fg)]" : ""}>
+                  <span className={`text-[0.62rem] font-medium leading-tight block ${selected ? "text-[var(--fg)] font-semibold" : "text-[var(--muted)]"}`}>
                     {f.name.replace(/\.[^.]+$/, "")}
                   </span>
                 </div>
@@ -152,43 +166,39 @@ export default function DesktopStage() {
             })}
           </div>
 
-          {/* 8-Slice Radial Wheel */}
+          {/* Radial wheel */}
           <div
-            className={`radial-menu absolute top-1/2 left-[56%] -translate-x-1/2 -translate-y-1/2 w-[290px] h-[290px] transition-all duration-200 z-20 ${
-              isOpen
-                ? "opacity-100 scale-100 pointer-events-auto"
-                : "opacity-0 scale-95 pointer-events-none"
+            className={`radial-wheel absolute top-1/2 left-[55%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] transition-all duration-200 z-20 ${
+              isOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
             }`}
           >
-            <svg
-              viewBox="0 0 200 200"
-              className="w-full h-full drop-shadow-[0_14px_32px_rgba(0,0,0,0.14)]"
-            >
+            <svg viewBox="0 0 200 200" className="w-full h-full" style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.18))" }}>
               {SLICES.map((slice, i) => {
-                const isCurrentActive = activeSlice === slice.id;
+                const active = activeSlice === slice.id;
                 return (
                   <g
                     key={slice.id}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleConvert(slice.out);
-                    }}
-                    onMouseEnter={() => {
-                      setActiveSlice(slice.id);
-                      playClickSound(700 + i * 30);
-                    }}
-                    className="cursor-pointer group"
+                    onClick={(e) => { e.stopPropagation(); handleConvert(slice.out); }}
+                    onMouseEnter={() => { setActiveSlice(slice.id); playTone(680 + i * 28, "sine", 0.04); }}
+                    className="cursor-pointer"
                   >
                     <path
                       d={slice.path}
-                      fill={isCurrentActive ? "var(--slice-on)" : "var(--slice)"}
+                      fill={active ? "var(--slice-on)" : "var(--slice)"}
+                      stroke="var(--line)"
+                      strokeWidth="0.5"
                       className="transition-colors duration-100"
                     />
                     <text
                       x={slice.tx}
                       y={slice.ty}
-                      fill={isCurrentActive ? "var(--slice-t-on)" : "var(--slice-t)"}
-                      className="font-sans text-[11px] font-semibold pointer-events-none select-none transition-colors duration-100"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill={active ? "var(--slice-t-on)" : "var(--slice-t)"}
+                      fontSize="11"
+                      fontWeight="700"
+                      fontFamily="inherit"
+                      className="pointer-events-none select-none transition-colors duration-100"
                     >
                       {slice.label}
                     </text>
@@ -196,58 +206,53 @@ export default function DesktopStage() {
                 );
               })}
 
-              {/* Center Hub */}
-              <circle
-                cx="100"
-                cy="100"
-                r="30"
-                fill="var(--elev)"
-                stroke="var(--line)"
-                className="pointer-events-none"
-              />
-              <text
-                x="100"
-                y="104"
-                textAnchor="middle"
-                fill="var(--faint)"
-                className="font-sans text-[10px] font-semibold pointer-events-none select-none"
-              >
-                Shift
-              </text>
+              {/* Hub */}
+              <circle cx="100" cy="100" r="31" fill="var(--elev)" stroke="var(--line)" strokeWidth="1" />
+              <text x="100" y="98" textAnchor="middle" fill="var(--muted)" fontSize="9.5" fontWeight="700" fontFamily="inherit">Shift</text>
+              <text x="100" y="109" textAnchor="middle" fill="var(--faint)" fontSize="7.5" fontFamily="inherit">hold</text>
             </svg>
           </div>
 
-          {/* Hint Pill */}
+          {/* Hint pill */}
           <div
-            className={`absolute left-1/2 -translate-x-1/2 bottom-5 text-[0.75rem] font-medium text-[var(--muted)] bg-[color-mix(in_srgb,var(--elev)_90%,transparent)] border border-[var(--line)] px-3 py-1.5 rounded-full whitespace-nowrap transition-opacity duration-200 pointer-events-none ${
-              isOpen ? "opacity-0" : "opacity-100"
+            className={`absolute left-1/2 -translate-x-1/2 bottom-6 transition-all duration-200 pointer-events-none ${
+              isOpen ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
             }`}
           >
-            Click a file · hold <kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] px-1.5 py-0.5 rounded">Shift</kbd> or click desk · press <kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] px-1.5 py-0.5 rounded">1</kbd>–<kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] px-1.5 py-0.5 rounded">8</kbd>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-[0.78rem] font-medium text-[var(--muted)] whitespace-nowrap shadow-[var(--shadow-md)] border border-[var(--line)]" style={{ background: "color-mix(in srgb, var(--elev) 90%, transparent)", backdropFilter: "blur(8px)" }}>
+              <span>Click a file</span>
+              <span className="w-px h-4 bg-[var(--line)]" />
+              <span>Hold <kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] border border-[var(--line)] px-1.5 py-0.5 rounded text-[11px]">Shift</kbd> or click desk</span>
+              <span className="w-px h-4 bg-[var(--line)]" />
+              <span>Press <kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] border border-[var(--line)] px-1.5 py-0.5 rounded text-[11px]">1</kbd>–<kbd className="font-bold text-[var(--fg)] bg-[var(--bg-soft)] border border-[var(--line)] px-1.5 py-0.5 rounded text-[11px]">8</kbd></span>
+            </div>
           </div>
 
-          {/* macOS Toast Notification */}
+          {/* macOS Toast */}
           <div
-            className={`absolute right-4 bottom-4 flex items-center gap-2.5 p-3 min-w-[200px] bg-[var(--elev)] border border-[var(--line)] rounded-[12px] shadow-[0_10px_28px_rgba(0,0,0,0.12)] transition-all duration-300 z-30 pointer-events-none ${
-              toastTitle
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-2.5"
+            className={`absolute right-5 bottom-5 z-30 pointer-events-none transition-all duration-300 ${
+              toastTitle ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-3 scale-95"
             }`}
           >
-            <div className="w-7 h-7 rounded-[8px] bg-[color-mix(in_srgb,var(--ok)_14%,transparent)] text-[var(--ok)] grid place-items-center shrink-0">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M20 6L9 17l-5-5" />
-              </svg>
-            </div>
-            <div>
-              <strong className="block text-[0.78rem] text-[var(--fg)]">
-                {toastTitle || "Converted"}
-              </strong>
-              <span className="text-[0.7rem] text-[var(--muted)]">Show in Finder</span>
+            <div className="flex items-center gap-3 px-4 py-3 min-w-[220px] rounded-[14px] shadow-[var(--shadow-xl)] border border-[var(--line)]" style={{ background: "var(--elev)" }}>
+              <div
+                className="w-8 h-8 rounded-[9px] flex items-center justify-center shrink-0"
+                style={{ background: "var(--ok-soft)", color: "var(--ok)" }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              </div>
+              <div>
+                <strong className="block text-[0.8rem] font-semibold text-[var(--fg)]">
+                  {toastTitle}
+                </strong>
+                <span className="text-[0.7rem] text-[var(--muted)]">Show in Finder</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

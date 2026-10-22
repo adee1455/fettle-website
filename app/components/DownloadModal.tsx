@@ -13,120 +13,97 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
 
   if (!isOpen) return null;
 
-  const terminalCmd = "xattr -cr /Applications/Fettle.app";
+  const cmd = "xattr -cr /Applications/Fettle.app";
 
-  const copyCommand = () => {
-    navigator.clipboard.writeText(terminalCmd);
+  const copy = () => {
+    navigator.clipboard.writeText(cmd);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)" }}>
       <div
-        className="relative w-full max-w-lg rounded-[16px] bg-[var(--elev)] border border-[var(--line)] shadow-[var(--shadow)] p-6 sm:p-7 text-[var(--fg)]"
+        className="relative w-full max-w-lg rounded-[20px] border border-[var(--line)] shadow-[var(--shadow-xl)] p-7"
+        style={{ background: "var(--elev)" }}
         role="dialog"
         aria-modal="true"
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           type="button"
-          aria-label="Close dialog"
-          className="absolute top-4 right-4 p-1.5 rounded-full text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-soft)] transition cursor-pointer"
+          aria-label="Close"
+          className="absolute top-4 right-4 p-1.5 rounded-[8px] text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-soft)] transition cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-9 h-9 rounded-full bg-[color-mix(in_srgb,var(--ok)_15%,transparent)] text-[var(--ok)] flex items-center justify-center shrink-0">
-            <CheckCircle2 className="w-5 h-5" />
+        <div className="flex items-start gap-3.5 mb-5">
+          <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ background: "var(--ok-soft)", color: "var(--ok)" }}>
+            <CheckCircle2 className="w-5.5 h-5.5" />
           </div>
           <div>
-            <h3 className="text-[1.15rem] font-bold tracking-tight">Your download is starting!</h3>
-            <p className="text-[0.825rem] text-[var(--muted)]">
-              Fettle-macOS.dmg is downloading directly in your browser.
+            <h3 className="text-[1.15rem] font-bold tracking-[-0.02em] text-[var(--fg)]">Your download is starting!</h3>
+            <p className="text-[0.85rem] text-[var(--muted)] mt-0.5">
+              Fettle-macOS.dmg is downloading directly from this site.
             </p>
           </div>
         </div>
 
-        {/* Direct links if download didn't start */}
-        <div className="p-3 mb-4 rounded-[10px] bg-[var(--bg-soft)] border border-[var(--line)] text-xs text-[var(--muted)] flex items-center justify-between">
-          <span>Didn&apos;t start automatically?</span>
-          <div className="flex items-center gap-2.5">
-            <a
-              href="/download"
-              download
-              className="font-semibold text-[var(--blue)] hover:underline flex items-center gap-1"
-            >
-              <Download className="w-3.5 h-3.5" />
-              Direct DMG
+        {/* Manual fallback links */}
+        <div className="p-3.5 rounded-[12px] mb-4 border border-[var(--line)] flex items-center justify-between text-[0.8rem]" style={{ background: "var(--bg-subtle)" }}>
+          <span className="text-[var(--muted)]">Didn't start?</span>
+          <div className="flex items-center gap-3">
+            <a href="/download" download className="flex items-center gap-1 font-semibold text-[var(--blue)] hover:underline">
+              <Download className="w-3.5 h-3.5" /> DMG
             </a>
-            <span className="text-[var(--faint)]">•</span>
-            <a
-              href="/download?format=zip"
-              download
-              className="font-semibold text-[var(--blue)] hover:underline"
-            >
-              ZIP
-            </a>
+            <span className="w-px h-4 bg-[var(--line)]" />
+            <a href="/download?format=zip" download className="font-semibold text-[var(--blue)] hover:underline">ZIP</a>
           </div>
         </div>
 
-        {/* First time launch notice */}
-        <div className="space-y-3.5">
-          <div className="rounded-[10px] border border-[var(--line)] bg-[var(--bg-soft)] p-3.5 text-xs">
-            <h4 className="font-semibold text-[var(--fg)] mb-1 flex items-center gap-1.5">
-              <span></span> First-Time Launch on macOS Sonoma / Sequoia
-            </h4>
-            <p className="text-[var(--muted)] leading-relaxed mb-2">
-              Because Fettle is free, independent open-source software, macOS Gatekeeper will verify it on first run:
-            </p>
-            <ol className="text-[var(--muted)] space-y-1 list-decimal list-inside pl-0.5">
-              <li>Drag <strong>Fettle.app</strong> into your Applications folder.</li>
-              <li>
-                <strong>Right-click</strong> Fettle.app &rarr; click <strong>Open</strong> &rarr; click <strong>Open Anyway</strong>.
-              </li>
+        {/* Gatekeeper instructions */}
+        <div className="rounded-[12px] border border-[var(--line)] overflow-hidden mb-4">
+          <div className="px-4 py-3 border-b border-[var(--line)] flex items-center gap-2" style={{ background: "var(--bg-subtle)" }}>
+            <span className="text-[0.72rem] font-semibold uppercase tracking-wider text-[var(--muted)]">
+              ⚠ First-Time Launch — macOS Gatekeeper
+            </span>
+          </div>
+          <div className="px-4 py-4">
+            <ol className="text-[0.85rem] text-[var(--muted)] space-y-2 list-decimal list-inside">
+              <li>Drag <strong className="text-[var(--fg)]">Fettle.app</strong> to Applications.</li>
+              <li><strong className="text-[var(--fg)]">Right-click</strong> Fettle.app → <strong className="text-[var(--fg)]">Open</strong> → <strong className="text-[var(--fg)]">Open Anyway</strong>.</li>
             </ol>
           </div>
+        </div>
 
-          {/* Terminal bypass shortcut */}
-          <div className="rounded-[10px] bg-[var(--ink)] text-[var(--ink-fg)] p-3 font-mono text-xs">
-            <div className="flex items-center justify-between mb-1 text-[var(--faint)] text-[11px]">
-              <span className="flex items-center gap-1">
-                <Terminal className="w-3.5 h-3.5 text-[var(--blue)]" /> Or run in Terminal:
-              </span>
-              <button
-                onClick={copyCommand}
-                type="button"
-                className="flex items-center gap-1 text-[var(--ink-fg)] bg-[color-mix(in_srgb,var(--ink-fg)_15%,transparent)] hover:bg-[color-mix(in_srgb,var(--ink-fg)_25%,transparent)] px-2 py-0.5 rounded transition cursor-pointer"
-              >
-                <Copy className="w-3 h-3" />
-                {copied ? "Copied" : "Copy"}
-              </button>
-            </div>
-            <code className="text-[var(--ok)] select-all block break-all font-mono text-[11px]">
-              {terminalCmd}
-            </code>
+        {/* Terminal command */}
+        <div className="rounded-[12px] overflow-hidden border border-[var(--line)] mb-5">
+          <div className="px-4 py-2.5 flex items-center justify-between border-b border-[var(--line)]" style={{ background: "var(--bg-subtle)" }}>
+            <span className="flex items-center gap-1.5 text-[0.75rem] text-[var(--muted)]">
+              <Terminal className="w-3.5 h-3.5" /> Or use Terminal:
+            </span>
+            <button onClick={copy} type="button" className="flex items-center gap-1.5 text-[0.72rem] font-medium text-[var(--muted)] hover:text-[var(--fg)] cursor-pointer transition-colors">
+              <Copy className="w-3 h-3" />
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+          <div className="px-4 py-3 font-mono text-[0.8rem] text-[var(--ok)] select-all break-all" style={{ background: "var(--ink)", color: "var(--ok)" }}>
+            {cmd}
           </div>
         </div>
 
-        {/* Footer actions */}
-        <div className="mt-5 flex items-center justify-between pt-3 border-t border-[var(--line)] text-xs text-[var(--muted)]">
-          <a
-            href="https://github.com/adee1455/fettle"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[var(--fg)] flex items-center gap-1 transition"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            View repository on GitHub
+        {/* Footer */}
+        <div className="flex items-center justify-between">
+          <a href="https://github.com/adee1455/fettle" target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-[0.8rem] text-[var(--muted)] hover:text-[var(--fg)] transition-colors">
+            <ExternalLink className="w-3.5 h-3.5" /> View on GitHub
           </a>
           <button
             onClick={onClose}
             type="button"
-            className="px-3.5 py-1.5 rounded-[8px] bg-[var(--ink)] text-[var(--ink-fg)] font-semibold hover:opacity-90 transition cursor-pointer"
+            className="px-4 py-2 rounded-[8px] text-[0.875rem] font-semibold bg-[var(--fg)] text-[var(--bg)] hover:opacity-85 transition cursor-pointer"
           >
             Got it
           </button>

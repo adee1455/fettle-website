@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ExternalLink } from "lucide-react";
 import confetti from "canvas-confetti";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -19,17 +20,16 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDownload = () => {
-    // 1. Confetti burst
     try {
       confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.55 },
-        colors: ["#2B6BFF", "#4C82FF", "#0D8A55", "#FF6154"],
+        particleCount: 55,
+        spread: 65,
+        origin: { y: 0.5 },
+        colors: ["#2563EB", "#4B79FF", "#0D8A55", "#FF6154", "#FEBC2E"],
+        disableForReducedMotion: true,
       });
     } catch {}
 
-    // 2. Trigger browser download directly from site (/download)
     const link = document.createElement("a");
     link.href = "/download";
     link.download = "Fettle-macOS.dmg";
@@ -37,14 +37,11 @@ export default function Home() {
     link.click();
     document.body.removeChild(link);
 
-    // 3. Open Gatekeeper / download helper modal
-    setTimeout(() => {
-      setIsModalOpen(true);
-    }, 180);
+    setTimeout(() => setIsModalOpen(true), 200);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--blue)] selection:text-white">
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--bg)", color: "var(--fg)" }}>
       <Navbar onDownloadClick={handleDownload} />
 
       <main className="flex-1">
@@ -59,13 +56,8 @@ export default function Home() {
       </main>
 
       <Footer />
-
       <StickyDownloadBar onDownloadClick={handleDownload} />
-
-      <DownloadModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }

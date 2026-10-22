@@ -9,47 +9,36 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const stored = (localStorage.getItem("theme") || localStorage.getItem("fettle-theme")) as "light" | "dark" | null;
-    const initialTheme = stored === "dark" ? "dark" : "light";
-    setTheme(initialTheme);
-    document.documentElement.setAttribute("data-theme", initialTheme);
-    if (initialTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+    const t = stored === "dark" ? "dark" : "light";
+    setTheme(t);
+    document.documentElement.setAttribute("data-theme", t);
+    document.documentElement.classList.toggle("dark", t === "dark");
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    localStorage.setItem("theme", nextTheme);
-    localStorage.setItem("fettle-theme", nextTheme);
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+  const toggle = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    document.documentElement.setAttribute("data-theme", next);
+    document.documentElement.classList.toggle("dark", next === "dark");
   };
 
   if (!mounted) {
-    return (
-      <div className="w-[34px] h-[34px] rounded-full border border-[var(--line)] opacity-40 animate-pulse" />
-    );
+    return <div className="w-8 h-8 rounded-[8px] border border-[var(--line)] opacity-30 animate-pulse" />;
   }
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={toggle}
       type="button"
       aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-      className="w-[34px] h-[34px] rounded-full border border-[var(--line)] bg-transparent text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-soft)] transition-colors duration-150 grid place-items-center cursor-pointer"
+      className="w-9 h-9 rounded-[8px] border border-[var(--line)] bg-transparent text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-soft)] hover:border-[var(--muted)] transition-all duration-150 grid place-items-center cursor-pointer"
     >
       {theme === "light" ? (
-        <Moon className="w-3.5 h-3.5 stroke-[2]" />
+        <Moon className="w-4 h-4 stroke-[1.75]" />
       ) : (
-        <Sun className="w-3.5 h-3.5 stroke-[2]" />
+        <Sun className="w-4 h-4 stroke-[1.75]" />
       )}
     </button>
   );

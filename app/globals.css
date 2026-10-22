@@ -2,81 +2,153 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* ─── Fettle Design Tokens ────────────────────────────────────────────── */
 :root, [data-theme="light"] {
-  --bg: #F7F6F3;
-  --bg-soft: #EEECE7;
-  --elev: #FFFFFF;
-  --fg: #111110;
-  --muted: #6A6963;
-  --faint: #9A998F;
-  --line: #E4E2DB;
-  --ink: #111110;
-  --ink-fg: #F7F6F3;
-  --blue: #2B6BFF;
-  --blue-hover: #1F55D9;
-  --ok: #0D8A55;
-  --desk: #DDD9D0;
-  --win: #FAFAF8;
-  --win-bar: #EDEBE5;
-  --slice: #FFFFFF;
-  --slice-on: #2B6BFF;
-  --slice-t: #111110;
-  --slice-t-on: #FFFFFF;
-  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 28px 80px rgba(0,0,0,.10);
-  --sticky: rgba(247,246,243,.88);
+  --bg:          #F8F7F4;
+  --bg-subtle:   #F0EEE9;
+  --bg-soft:     #ECEAE3;
+  --elev:        #FFFFFF;
+  --elev-raised: #FCFBF9;
+  --fg:          #0F0E0D;
+  --muted:       #6C6A63;
+  --faint:       #9E9C93;
+  --line:        #E2DFD7;
+  --line-soft:   #EBEBEB;
+  --ink:         #0F0E0D;
+  --ink-fg:      #F8F7F4;
+  --blue:        #2563EB;
+  --blue-hover:  #1D4FD8;
+  --blue-soft:   rgba(37, 99, 235, 0.08);
+  --ok:          #0D8A55;
+  --ok-soft:     rgba(13, 138, 85, 0.12);
+  --desk:        #DDD9CF;
+  --win:         #FAFAF8;
+  --win-bar:     #EDEAE3;
+  --slice:       #FFFFFF;
+  --slice-on:    #2563EB;
+  --slice-t:     #0F0E0D;
+  --slice-t-on:  #FFFFFF;
+  --nav-bg:      rgba(248, 247, 244, 0.85);
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:   0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-lg:   0 8px 40px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-xl:   0 20px 60px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06);
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  28px;
 }
 
 [data-theme="dark"] {
-  --bg: #0C0C0B;
-  --bg-soft: #181816;
-  --elev: #161614;
-  --fg: #F5F4F0;
-  --muted: #A3A29A;
-  --faint: #6F6E66;
-  --line: #2A2A27;
-  --ink: #F5F4F0;
-  --ink-fg: #0C0C0B;
-  --blue: #4C82FF;
-  --blue-hover: #6B9AFF;
-  --ok: #34D399;
-  --desk: #1A1A18;
-  --win: #141412;
-  --win-bar: #222220;
-  --slice: #252523;
-  --slice-on: #4C82FF;
-  --slice-t: #F5F4F0;
-  --slice-t-on: #0C0C0B;
-  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 32px 90px rgba(0,0,0,.55);
-  --sticky: rgba(12,12,11,.88);
+  --bg:          #0B0A09;
+  --bg-subtle:   #131211;
+  --bg-soft:     #1A1916;
+  --elev:        #161513;
+  --elev-raised: #1C1B18;
+  --fg:          #F4F2EE;
+  --muted:       #A09E96;
+  --faint:       #6A6860;
+  --line:        #28271F;
+  --line-soft:   #2D2C26;
+  --ink:         #F4F2EE;
+  --ink-fg:      #0B0A09;
+  --blue:        #4B79FF;
+  --blue-hover:  #6390FF;
+  --blue-soft:   rgba(75, 121, 255, 0.12);
+  --ok:          #34D399;
+  --ok-soft:     rgba(52, 211, 153, 0.12);
+  --desk:        #1C1B18;
+  --win:         #141310;
+  --win-bar:     #201E1B;
+  --slice:       #252420;
+  --slice-on:    #4B79FF;
+  --slice-t:     #F4F2EE;
+  --slice-t-on:  #0B0A09;
+  --nav-bg:      rgba(11, 10, 9, 0.85);
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:   0 4px 20px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg:   0 8px 40px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.3);
+  --shadow-xl:   0 20px 60px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--bg);
+  margin: 0;
+  background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-geist-sans), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overflow-x: hidden;
-  line-height: 1.5;
+  font-family: var(--font-geist-sans), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  padding-bottom: 72px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  padding-bottom: 68px;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.25);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.45);
+a { text-decoration: none; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
-.wrap {
-  width: min(980px, calc(100% - 40px));
+/* ─── Utilities ─────────────────────────────────────────────────────────── */
+.container {
+  width: min(1100px, calc(100% - 48px));
   margin-inline: auto;
+}
+
+.section-heading {
+  font-size: clamp(1.65rem, 3.2vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.038em;
+  line-height: 1.12;
+  color: var(--fg);
+}
+
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ─── Key chips ─────────────────────────────────────────────────────────── */
+.keychip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: 0.01em;
+}
+
+/* ─── Frosted glass nav ─────────────────────────────────────────────────── */
+.nav-frosted {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(150,150,130,0.25); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(150,150,130,0.45); }
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
