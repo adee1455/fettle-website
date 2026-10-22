@@ -1,62 +1,64 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-:root {
-  --background: #fbfbfd;
-  --foreground: #1d1d1f;
-  --muted-text: #6e6e73;
-  --card-bg: #ffffff;
-  --card-border: rgba(0, 0, 0, 0.08);
-  --accent: #0071e3;
-  --accent-glow: rgba(0, 113, 227, 0.15);
+:root, [data-theme="light"] {
+  --bg: #F7F6F3;
+  --bg-soft: #EEECE7;
+  --elev: #FFFFFF;
+  --fg: #111110;
+  --muted: #6A6963;
+  --faint: #9A998F;
+  --line: #E4E2DB;
+  --ink: #111110;
+  --ink-fg: #F7F6F3;
+  --blue: #2B6BFF;
+  --blue-hover: #1F55D9;
+  --ok: #0D8A55;
+  --desk: #DDD9D0;
+  --win: #FAFAF8;
+  --win-bar: #EDEBE5;
+  --slice: #FFFFFF;
+  --slice-on: #2B6BFF;
+  --slice-t: #111110;
+  --slice-t-on: #FFFFFF;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 28px 80px rgba(0,0,0,.10);
+  --sticky: rgba(247,246,243,.88);
 }
 
-.dark {
-  --background: #08090c;
-  --foreground: #f5f5f7;
-  --muted-text: #86868b;
-  --card-bg: #111319;
-  --card-border: rgba(255, 255, 255, 0.09);
-  --accent: #3b82f6;
-  --accent-glow: rgba(59, 130, 246, 0.2);
+[data-theme="dark"] {
+  --bg: #0C0C0B;
+  --bg-soft: #181816;
+  --elev: #161614;
+  --fg: #F5F4F0;
+  --muted: #A3A29A;
+  --faint: #6F6E66;
+  --line: #2A2A27;
+  --ink: #F5F4F0;
+  --ink-fg: #0C0C0B;
+  --blue: #4C82FF;
+  --blue-hover: #6B9AFF;
+  --ok: #34D399;
+  --desk: #1A1A18;
+  --win: #141412;
+  --win-bar: #222220;
+  --slice: #252523;
+  --slice-on: #4C82FF;
+  --slice-t: #F5F4F0;
+  --slice-t-on: #0C0C0B;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 32px 90px rgba(0,0,0,.55);
+  --sticky: rgba(12,12,11,.88);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Glassmorphism helpers */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.07);
-}
-
-.dark .glass-panel {
-  background: rgba(17, 19, 25, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-nav {
-  background: rgba(251, 251, 253, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.dark .glass-nav {
-  background: rgba(8, 9, 12, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 72px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Custom scrollbar */
@@ -67,9 +69,14 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.3);
+  background: rgba(150, 150, 150, 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.5);
+  background: rgba(150, 150, 150, 0.45);
+}
+
+.wrap {
+  width: min(980px, calc(100% - 40px));
+  margin-inline: auto;
 }

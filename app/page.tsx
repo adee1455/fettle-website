@@ -4,12 +4,15 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import RadialSimulator from "./components/RadialSimulator";
-import BentoFeatures from "./components/BentoFeatures";
-import PresetCatalogue from "./components/PresetCatalogue";
+import DesktopStage from "./components/DesktopStage";
+import QuoteBridge from "./components/QuoteBridge";
+import HowSection from "./components/HowSection";
+import FormatsSection from "./components/FormatsSection";
+import PrivacySection from "./components/PrivacySection";
 import GatekeeperGuide from "./components/GatekeeperGuide";
-import DownloadBanner from "./components/DownloadBanner";
+import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
+import StickyDownloadBar from "./components/StickyDownloadBar";
 import DownloadModal from "./components/DownloadModal";
 
 export default function Home() {
@@ -19,14 +22,12 @@ export default function Home() {
     // 1. Confetti burst
     try {
       confetti({
-        particleCount: 80,
-        spread: 80,
+        particleCount: 50,
+        spread: 60,
         origin: { y: 0.55 },
-        colors: ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#fbbf24"],
+        colors: ["#2B6BFF", "#4C82FF", "#0D8A55", "#FF6154"],
       });
-    } catch {
-      // Ignored if canvas not ready
-    }
+    } catch {}
 
     // 2. Trigger browser download directly from site (/download)
     const link = document.createElement("a");
@@ -39,23 +40,27 @@ export default function Home() {
     // 3. Open Gatekeeper / download helper modal
     setTimeout(() => {
       setIsModalOpen(true);
-    }, 200);
+    }, 180);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] selection:bg-blue-500/20 selection:text-blue-600">
+    <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--blue)] selection:text-white">
       <Navbar onDownloadClick={handleDownload} />
-      
+
       <main className="flex-1">
         <Hero onDownloadClick={handleDownload} />
-        <RadialSimulator />
-        <BentoFeatures />
-        <PresetCatalogue />
+        <DesktopStage />
+        <QuoteBridge />
+        <HowSection />
+        <FormatsSection />
+        <PrivacySection />
         <GatekeeperGuide />
-        <DownloadBanner onDownloadClick={handleDownload} />
+        <FinalCTA onDownloadClick={handleDownload} />
       </main>
 
       <Footer />
+
+      <StickyDownloadBar onDownloadClick={handleDownload} />
 
       <DownloadModal
         isOpen={isModalOpen}

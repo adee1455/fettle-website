@@ -14,26 +14,26 @@ const geistMono = Geist_Mono({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfbfd" },
-    { media: "(prefers-color-scheme: dark)", color: "#08090c" },
+    { media: "(prefers-color-scheme: light)", color: "#F7F6F3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C0C0B" },
   ],
   width: "device-width",
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  title: "Fettle — Your files, in good shape (Native macOS Utility)",
+  title: "Fettle — Your files, in good shape",
   description:
-    "The native macOS file utility you trigger without switching windows. Hold Shift in Finder, pick your format, and convert in place. 100% offline, zero cloud uploads.",
+    "Convert files where they are. Shift-drag on the Desktop or in Finder. A radial menu converts beside your originals — nothing leaves your Mac.",
   keywords: [
-    "macOS utility",
     "Fettle",
-    "file converter",
-    "HEIC to WebP",
-    "macOS radial menu",
+    "macOS utility",
+    "convert files",
+    "Shift drag radial menu",
+    "on-device file converter",
+    "HEIC to WebP mac",
     "open source mac app",
-    "Finder file actions",
-    "PDF converter mac",
+    "Apple Silicon utility",
   ],
   authors: [{ name: "Adee", url: "https://itsadee.com" }],
   creator: "Adee",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Fettle — Your files, in good shape",
     description:
-      "The native macOS file utility you trigger without switching windows. Convert in place with zero cloud uploads.",
+      "Convert files where they are. Shift-drag on the Desktop or in Finder. A radial menu converts beside your originals — nothing leaves your Mac.",
     url: "https://fettle.itsadee.com",
     siteName: "Fettle",
     locale: "en_US",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Fettle — Your files, in good shape",
     description:
-      "Native macOS file utility triggered right from Finder. 100% offline, zero cloud uploads.",
+      "Convert files where they are. Shift-drag on the Desktop or in Finder. On-device, 100% private.",
     creator: "@itsadee",
   },
   icons: {
@@ -65,15 +65,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en" data-theme="light" suppressHydrationWarning className="scroll-smooth">
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  const stored = localStorage.getItem('fettle-theme');
-                  if (stored === 'dark') {
+                  const stored = localStorage.getItem('theme') || localStorage.getItem('fettle-theme');
+                  const t = stored === 'dark' ? 'dark' : 'light';
+                  document.documentElement.setAttribute('data-theme', t);
+                  if (t === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
                     document.documentElement.classList.remove('dark');

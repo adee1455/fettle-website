@@ -9,17 +9,13 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("fettle-theme") as "light" | "dark" | null;
-    if (stored) {
-      setTheme(stored);
-      if (stored === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+    const stored = (localStorage.getItem("theme") || localStorage.getItem("fettle-theme")) as "light" | "dark" | null;
+    const initialTheme = stored === "dark" ? "dark" : "light";
+    setTheme(initialTheme);
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    if (initialTheme === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      // Default to light mode as requested
-      setTheme("light");
       document.documentElement.classList.remove("dark");
     }
   }, []);
@@ -27,7 +23,9 @@ export default function ThemeToggle() {
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
     localStorage.setItem("fettle-theme", nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
     if (nextTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -37,20 +35,21 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 animate-pulse" />
+      <div className="w-[34px] h-[34px] rounded-full border border-[var(--line)] opacity-40 animate-pulse" />
     );
   }
 
   return (
     <button
       onClick={toggleTheme}
-      aria-label="Toggle color theme"
-      className="p-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-white/20 transition-all duration-200 shadow-xs"
+      type="button"
+      aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      className="w-[34px] h-[34px] rounded-full border border-[var(--line)] bg-transparent text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-soft)] transition-colors duration-150 grid place-items-center cursor-pointer"
     >
       {theme === "light" ? (
-        <Moon className="w-4 h-4 text-slate-700" />
+        <Moon className="w-3.5 h-3.5 stroke-[2]" />
       ) : (
-        <Sun className="w-4 h-4 text-amber-400" />
+        <Sun className="w-3.5 h-3.5 stroke-[2]" />
       )}
     </button>
   );
