@@ -40,14 +40,14 @@ export default function HowSection() {
             </div>
 
             {/* Real Screenshot Preview */}
-            <div className="p-4 sm:p-6 flex items-center justify-center overflow-hidden bg-[#0c0d12] relative min-h-[280px]">
-              <div className="relative w-full max-w-[340px] rounded-xl overflow-hidden shadow-2xl border border-white/10 group">
+            <div className="p-6 sm:p-8 flex items-center justify-center overflow-hidden relative min-h-[280px]" style={{ background: "var(--bg-soft)", borderLeft: "1px solid var(--line)" }}>
+              <div className="relative w-full max-w-[300px] flex items-center justify-center group">
                 <img
                   src="/screenshots/radial-menu.png"
                   alt="Real Native Fettle Radial HUD"
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
                 />
-                <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-semibold text-white/90 border border-white/10">
+                <div className="absolute bottom-1 right-1 px-2.5 py-1 rounded-full bg-[var(--elev)]/90 backdrop-blur-md text-[10px] font-semibold text-[var(--fg)] border border-[var(--line)] shadow-xs">
                   Native macOS HUD
                 </div>
               </div>

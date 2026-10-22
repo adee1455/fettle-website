@@ -135,8 +135,8 @@ export default function DesktopStage() {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <span className="text-[0.72rem] font-medium text-[var(--muted)]">
               {viewMode === "interactive" && "Desktop — try it"}
-              {viewMode === "radial_screenshot" && "Native macOS Radial Menu (Real Screenshot)"}
-              {viewMode === "app_screenshot" && "Fettle for Mac (Real Screenshot)"}
+              {viewMode === "radial_screenshot" && "Native macOS Radial HUD (Isolated Crop)"}
+              {viewMode === "app_screenshot" && "Fettle for Mac (Clean Window)"}
             </span>
           </div>
 
@@ -162,29 +162,32 @@ export default function DesktopStage() {
 
         {/* Real Screenshot View: Native Radial HUD */}
         {viewMode === "radial_screenshot" && (
-          <div className="relative min-h-[460px] bg-[#0c0d12] flex items-center justify-center overflow-hidden">
-            <img
-              src="/screenshots/radial-menu.png"
-              alt="Real Fettle macOS Native Radial Menu Screenshot"
-              className="w-full max-h-[520px] object-contain drop-shadow-2xl"
-            />
-            {/* Annotation callouts */}
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-xs text-white/80 font-medium">
-              Real Retina screen capture
+          <div className="relative min-h-[460px] flex items-center justify-center overflow-hidden p-8" style={{ background: "var(--desk)" }}>
+            <div className="relative max-w-[380px] w-full flex items-center justify-center">
+              <img
+                src="/screenshots/radial-menu.png"
+                alt="Real Fettle macOS Native Radial Menu Screenshot"
+                className="w-full h-auto object-contain transition-transform hover:scale-105 duration-300"
+              />
+            </div>
+            <div className="absolute top-4 right-4 bg-[var(--elev)]/90 backdrop-blur-md border border-[var(--line)] px-3 py-1.5 rounded-full text-xs text-[var(--fg)] font-medium shadow-xs">
+               Real Native Retina HUD
             </div>
           </div>
         )}
 
         {/* Real Screenshot View: App Window */}
         {viewMode === "app_screenshot" && (
-          <div className="relative min-h-[460px] bg-[#0c0d12] flex items-center justify-center overflow-hidden p-2">
-            <img
-              src="/screenshots/fettle-main-window.png"
-              alt="Real Fettle macOS App Window Screenshot"
-              className="w-full max-h-[520px] object-contain drop-shadow-2xl rounded-xl"
-            />
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-xs text-white/80 font-medium">
-              Native SwiftUI Window
+          <div className="relative min-h-[460px] flex items-center justify-center overflow-hidden p-6 sm:p-10" style={{ background: "var(--desk)" }}>
+            <div className="relative max-w-[840px] w-full">
+              <img
+                src="/screenshots/fettle-main-window.png"
+                alt="Real Fettle macOS App Window Screenshot"
+                className="w-full h-auto object-contain transition-transform hover:scale-[1.01] duration-300"
+              />
+            </div>
+            <div className="absolute top-4 right-4 bg-[var(--elev)]/90 backdrop-blur-md border border-[var(--line)] px-3 py-1.5 rounded-full text-xs text-[var(--fg)] font-medium shadow-xs">
+               Native SwiftUI Window
             </div>
           </div>
         )}
