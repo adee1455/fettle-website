@@ -1,5 +1,6 @@
 import React from "react";
 import GithubIcon from "./GithubIcon";
+import FettleLogo from "./FettleLogo";
 
 export default function Footer() {
   return (
@@ -7,13 +8,7 @@ export default function Footer() {
       <div className="container py-8 flex flex-wrap items-center justify-between gap-5">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-[7px] overflow-hidden shrink-0 shadow-xs">
-            <img
-              src="/app-icon.png"
-              alt="Fettle App Icon"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <FettleLogo size={26} />
           <div>
             <span className="font-bold text-[0.9rem] text-[var(--fg)] tracking-tight">Fettle</span>
             <p className="text-[0.7rem] text-[var(--faint)] m-0 leading-none mt-0.5">Your files, in good shape.</p>

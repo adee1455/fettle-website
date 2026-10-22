@@ -54,7 +54,7 @@ export default function Hero({ onDownloadClick }: HeroProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ok)] opacity-60" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--ok)]" />
           </span>
-          <span>v0.1.0 — now live for Apple Silicon &amp; Intel</span>
+          <span>v1.0 — now live for Apple Silicon &amp; Intel</span>
           <ArrowRight className="w-3 h-3 text-[var(--faint)]" />
         </div>
 
@@ -78,8 +78,7 @@ export default function Hero({ onDownloadClick }: HeroProps) {
         {/* Subtext */}
         <p className="mx-auto max-w-[38rem] text-[1.1rem] text-[var(--muted)] leading-[1.65] mb-10">
           Shift-drag on the <strong className="text-[var(--fg)] font-semibold">Desktop or Finder</strong>. A radial
-          menu appears and converts files beside your originals — in milliseconds,
-          using native Apple frameworks. Nothing ever leaves your Mac.
+          menu appears and converts files beside your originals — in milliseconds. Nothing ever leaves your Mac.
         </p>
 
         {/* CTA Buttons */}
@@ -97,20 +96,13 @@ export default function Hero({ onDownloadClick }: HeroProps) {
           </button>
 
           <a
-            href="#try"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[12px] bg-[var(--elev)] text-[var(--fg)] text-[1rem] font-semibold border border-[var(--line)] hover:border-[var(--muted)] hover:bg-[var(--bg-soft)] transition-all duration-150 shadow-[var(--shadow-sm)]"
-          >
-            Try the gesture ↓
-          </a>
-
-          <a
             href="https://github.com/adee1455/fettle"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 px-5 py-3.5 rounded-[12px] text-[var(--muted)] text-[1rem] font-medium hover:text-[var(--fg)] transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[12px] bg-[var(--elev)] text-[var(--fg)] text-[1rem] font-semibold border border-[var(--line)] hover:border-[var(--muted)] hover:bg-[var(--bg-soft)] transition-all duration-150 shadow-[var(--shadow-sm)]"
           >
             <GithubIcon className="w-4.5 h-4.5" />
-            GitHub
+            View on GitHub
           </a>
         </div>
 
@@ -118,8 +110,7 @@ export default function Hero({ onDownloadClick }: HeroProps) {
         <div className="flex flex-wrap items-center justify-center gap-2">
           {[
             { icon: "✦", label: "100% Free & Open Source" },
-            { icon: "⬡", label: "Apple Silicon & Intel" },
-            { icon: "⬦", label: "macOS 14+ (Sonoma & Sequoia)" },
+            { icon: "⬡", label: "Apple Silicon & Intel · macOS 14+" },
             { icon: "↯", label: "100% Offline · No Cloud" },
           ].map((chip) => (
             <span

@@ -10,98 +10,93 @@ export default function HowSection() {
             How it works
           </p>
           <h2 className="section-heading mb-4">
-            One gesture. Anywhere your files live.
+            Two ways to convert. Zero friction.
           </h2>
           <p className="section-lead">
-            Desktop or Finder — select files, hold Shift, and the radial wheel blooms right at your cursor.
-            Context-aware slices. No windows to manage.
+            Trigger the HUD right where your files live with Shift-drag, or open Fettle for dedicated drop zones and batch jobs.
           </p>
         </div>
 
         {/* Two steps */}
         <div className="flex flex-col gap-8">
           {/* Step 1: Real Native Radial Menu Screenshot */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center rounded-[20px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
-            <div className="p-8 sm:p-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center rounded-[24px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
+            <div className="lg:col-span-5 p-8 sm:p-12">
               <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--blue-soft)] text-[var(--blue)] text-[0.8rem] font-bold mb-5">
                 1
               </div>
-              <h3 className="text-[1.4rem] font-bold tracking-[-0.03em] mb-3 text-[var(--fg)]">
+              <h3 className="text-[1.5rem] font-bold tracking-[-0.03em] mb-3 text-[var(--fg)]">
                 Shift-drag. Pick a slice.
               </h3>
-              <p className="text-[var(--muted)] text-[0.975rem] leading-relaxed mb-6">
-                Hold Shift while dragging in Finder or on your Desktop. The native radial HUD blooms directly anchored to your cursor. Tap hotkeys <kbd className="font-mono text-xs px-1.5 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)]">1</kbd>–<kbd className="font-mono text-xs px-1.5 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)]">3</kbd> or release on a node to convert in place.
+              <p className="text-[var(--muted)] text-[1rem] leading-relaxed mb-6">
+                Hold Shift while dragging files in Finder or on your Desktop. The native radial HUD blooms directly anchored to your cursor. Tap hotkeys <kbd className="font-mono text-xs px-2 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)] font-semibold text-[var(--fg)]">1</kbd>–<kbd className="font-mono text-xs px-2 py-0.5 rounded bg-[var(--bg-soft)] border border-[var(--line)] font-semibold text-[var(--fg)]">3</kbd> or release on a node to convert in place.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Shift · open", "1–8 · trigger", "Esc · dismiss", "⌘Z · undo"].map((k) => (
+                {["Shift · trigger", "1–3 · hotkeys", "Esc · dismiss"].map((k) => (
                   <span key={k} className="keychip">{k}</span>
                 ))}
               </div>
             </div>
 
-            {/* Real Screenshot Preview */}
-            <div className="p-6 sm:p-8 flex items-center justify-center overflow-hidden relative min-h-[280px]" style={{ background: "var(--bg-soft)", borderLeft: "1px solid var(--line)" }}>
-              <div className="relative w-full max-w-[300px] flex items-center justify-center group">
+            {/* Real Screenshot Preview (Spacious & High-Res) */}
+            <div
+              className="lg:col-span-7 p-6 sm:p-10 flex items-center justify-center overflow-hidden relative min-h-[360px] sm:min-h-[420px]"
+              style={{
+                background: "radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--blue) 12%, #14151a) 0%, #0c0d12 100%)",
+                borderLeft: "1px solid var(--line)"
+              }}
+            >
+              <div className="relative w-full max-w-[390px] flex items-center justify-center group">
                 <img
                   src="/screenshots/radial-menu.png"
                   alt="Real Native Fettle Radial HUD"
-                  className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
+                  width={764}
+                  height={764}
+                  className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
                 />
-                <div className="absolute bottom-1 right-1 px-2.5 py-1 rounded-full bg-[var(--elev)]/90 backdrop-blur-md text-[10px] font-semibold text-[var(--fg)] border border-[var(--line)] shadow-xs">
+                <div className="absolute -bottom-2 right-0 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[11px] font-semibold text-white/90 border border-white/15 shadow-lg">
                   Native macOS HUD
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Step 2: Action Picker */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center rounded-[20px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
-            {/* Action picker mock */}
-            <div className="p-8 sm:p-10 flex items-center justify-center order-last md:order-first" style={{ background: "var(--bg-soft)", borderRight: "1px solid var(--line)" }}>
-              <div className="w-full max-w-[280px] rounded-[12px] overflow-hidden border border-[var(--line)] shadow-[var(--shadow-lg)]" style={{ background: "var(--elev)" }}>
-                {/* Picker search bar */}
-                <div className="flex items-center gap-2.5 px-3.5 py-2.5 border-b border-[var(--line)]" style={{ background: "var(--bg-subtle)" }}>
-                  <svg className="w-3.5 h-3.5 text-[var(--faint)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 6.5 6.5a7.5 7.5 0 0 0 10.15 10.15z" />
-                  </svg>
-                  <span className="text-[0.8rem] text-[var(--faint)]">Search actions…</span>
+          {/* Step 2: Main Window & Drop Zone */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center rounded-[24px] border border-[var(--line)] overflow-hidden shadow-[var(--shadow-sm)]" style={{ background: "var(--elev)" }}>
+            {/* Real Screenshot of Main App Window (Full Width & Crisp) */}
+            <div
+              className="lg:col-span-7 p-6 sm:p-10 flex items-center justify-center order-last lg:order-first overflow-hidden relative min-h-[360px] sm:min-h-[420px]"
+              style={{
+                background: "radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--blue) 8%, #14151a) 0%, #0c0d12 100%)",
+                borderRight: "1px solid var(--line)"
+              }}
+            >
+              <div className="relative w-full max-w-[560px] flex items-center justify-center group">
+                <img
+                  src="/screenshots/fettle-main-window.png"
+                  alt="Real Fettle macOS App Window"
+                  width={1888}
+                  height={1302}
+                  className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] drop-shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-[14px]"
+                />
+                <div className="absolute -bottom-2 right-0 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[11px] font-semibold text-white/90 border border-white/15 shadow-lg">
+                  Fettle Main Window
                 </div>
-
-                {[
-                  { label: "Convert to WebP",  ext: ".webp", suggested: true },
-                  { label: "Convert to JPEG",  ext: ".jpg" },
-                  { label: "Resize 50%",       ext: ".png" },
-                  { label: "Strip EXIF",       ext: "meta" },
-                  { label: "Images → PDF",     ext: ".pdf" },
-                ].map((row, i) => (
-                  <div
-                    key={row.label}
-                    className={`flex items-center gap-2 px-3.5 py-2.5 text-[0.85rem] ${i < 4 ? "border-b border-[var(--line)]" : ""} ${row.suggested ? "bg-[var(--blue-soft)]" : "hover:bg-[var(--bg-subtle)]"}`}
-                  >
-                    <span className={`flex-1 font-medium ${row.suggested ? "text-[var(--fg)]" : "text-[var(--muted)]"}`}>{row.label}</span>
-                    {row.suggested && (
-                      <span className="text-[0.6rem] font-bold uppercase tracking-wider text-[var(--blue)] px-1.5 py-0.5 rounded bg-[var(--elev)]">
-                        Suggested
-                      </span>
-                    )}
-                    <span className="text-[0.75rem] text-[var(--faint)] font-mono">{row.ext}</span>
-                  </div>
-                ))}
               </div>
             </div>
 
-            <div className="p-8 sm:p-10">
+            <div className="lg:col-span-5 p-8 sm:p-12">
               <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--blue-soft)] text-[var(--blue)] text-[0.8rem] font-bold mb-5">
                 2
               </div>
-              <h3 className="text-[1.4rem] font-bold tracking-[-0.03em] mb-3 text-[var(--fg)]">
-                Or open the Action Picker.
+              <h3 className="text-[1.5rem] font-bold tracking-[-0.03em] mb-3 text-[var(--fg)]">
+                Or drop files into the app window.
               </h3>
-              <p className="text-[var(--muted)] text-[0.975rem] leading-relaxed mb-6">
-                Press Return or ⌘R to open a searchable picker. Suggested conversions appear first — based on the file type you selected. Navigate with ↑ ↓ and confirm with Return.
+              <p className="text-[var(--muted)] text-[1rem] leading-relaxed mb-6">
+                Prefer a dedicated workspace or converting multiple files at once? Drag and drop directly into the Fettle drop zone. Inspect loaded files, track real-time job queues, and generate collision-safe in-place outputs.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Return / ⌘R", "↑ ↓ navigate", "Return · execute"].map((k) => (
+                {["Drag & Drop", "Batch jobs", "In-place output"].map((k) => (
                   <span key={k} className="keychip">{k}</span>
                 ))}
               </div>

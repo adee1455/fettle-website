@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Download, Star, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import GithubIcon from "./GithubIcon";
+import FettleLogo from "./FettleLogo";
 
 interface NavbarProps {
   onDownloadClick: () => void;
@@ -45,22 +46,15 @@ export default function Navbar({ onDownloadClick }: NavbarProps) {
           {/* Brand */}
           <Link
             href="/"
-            className="flex items-center gap-3 mr-auto group"
+            className="flex items-center gap-2.5 mr-auto group"
           >
-            {/* Real Fettle App Icon */}
-            <div className="relative w-9 h-9 rounded-[10px] overflow-hidden shrink-0 shadow-[var(--shadow-sm)] group-hover:scale-105 transition-transform duration-200">
-              <img
-                src="/app-icon.png"
-                alt="Fettle App Icon"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex items-center gap-2.5">
+            <FettleLogo size={28} />
+            <div className="flex items-center gap-2">
               <span className="font-bold text-[17px] tracking-[-0.03em] text-[var(--fg)]">
                 Fettle
               </span>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[var(--blue-soft)] text-[var(--blue)] border border-[var(--blue)] border-opacity-20">
-                v0.1.0
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[var(--blue-soft)] text-[var(--blue)] border border-[var(--blue)]/20">
+                v1.0
               </span>
             </div>
           </Link>

@@ -162,15 +162,22 @@ export default function DesktopStage() {
 
         {/* Real Screenshot View: Native Radial HUD */}
         {viewMode === "radial_screenshot" && (
-          <div className="relative min-h-[460px] flex items-center justify-center overflow-hidden p-8" style={{ background: "var(--desk)" }}>
-            <div className="relative max-w-[380px] w-full flex items-center justify-center">
+          <div
+            className="relative min-h-[480px] sm:min-h-[540px] flex items-center justify-center overflow-hidden p-8"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--blue) 12%, #14151a) 0%, #0c0d12 100%)"
+            }}
+          >
+            <div className="relative max-w-[440px] w-full flex items-center justify-center">
               <img
                 src="/screenshots/radial-menu.png"
                 alt="Real Fettle macOS Native Radial Menu Screenshot"
-                className="w-full h-auto object-contain transition-transform hover:scale-105 duration-300"
+                width={764}
+                height={764}
+                className="w-full h-auto object-contain transition-transform hover:scale-105 duration-300 drop-shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
               />
             </div>
-            <div className="absolute top-4 right-4 bg-[var(--elev)]/90 backdrop-blur-md border border-[var(--line)] px-3 py-1.5 rounded-full text-xs text-[var(--fg)] font-medium shadow-xs">
+            <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full text-xs text-white/90 font-medium shadow-lg">
                Real Native Retina HUD
             </div>
           </div>
@@ -178,15 +185,22 @@ export default function DesktopStage() {
 
         {/* Real Screenshot View: App Window */}
         {viewMode === "app_screenshot" && (
-          <div className="relative min-h-[460px] flex items-center justify-center overflow-hidden p-6 sm:p-10" style={{ background: "var(--desk)" }}>
-            <div className="relative max-w-[840px] w-full">
+          <div
+            className="relative min-h-[480px] sm:min-h-[540px] flex items-center justify-center overflow-hidden p-6 sm:p-12"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--blue) 8%, #14151a) 0%, #0c0d12 100%)"
+            }}
+          >
+            <div className="relative max-w-[880px] w-full">
               <img
                 src="/screenshots/fettle-main-window.png"
                 alt="Real Fettle macOS App Window Screenshot"
-                className="w-full h-auto object-contain transition-transform hover:scale-[1.01] duration-300"
+                width={1888}
+                height={1302}
+                className="w-full h-auto object-contain transition-transform hover:scale-[1.01] duration-300 drop-shadow-[0_30px_70px_rgba(0,0,0,0.7)] rounded-[14px]"
               />
             </div>
-            <div className="absolute top-4 right-4 bg-[var(--elev)]/90 backdrop-blur-md border border-[var(--line)] px-3 py-1.5 rounded-full text-xs text-[var(--fg)] font-medium shadow-xs">
+            <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full text-xs text-white/90 font-medium shadow-lg">
                Native SwiftUI Window
             </div>
           </div>
