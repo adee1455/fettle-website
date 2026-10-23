@@ -113,7 +113,7 @@ export default function GatekeeperGuide() {
                     Click "Open Anyway"
                   </h3>
                   <p className="text-[0.84rem] text-[var(--muted)] leading-relaxed">
-                    Click <strong>Open Anyway</strong> on the system prompt. macOS saves this permanently — you will <strong>never be asked again</strong>.
+                    Click <strong>Open Anyway</strong> on the prompt. If on macOS Sequoia, you can also approve it in <strong>System Settings → Privacy &amp; Security</strong>. macOS saves this permanently.
                   </p>
                 </div>
                 <div className="mt-5 pt-3 border-t border-[var(--line)]/60 text-[0.76rem] text-[var(--ok)] font-medium flex items-center gap-1.5">
@@ -123,28 +123,35 @@ export default function GatekeeperGuide() {
               </div>
             </div>
 
-            {/* Bottom Reassurance & Sequoia Tip Banner */}
+            {/* macOS Sequoia Callout & Privacy Banner */}
             <div
-              className="mt-6 p-4 sm:p-5 rounded-[14px] border border-[var(--line)] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="mt-6 p-4 sm:p-5 rounded-[16px] border border-[var(--line)] flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4"
               style={{ background: "var(--bg-subtle)" }}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[var(--ok-soft)] text-[var(--ok)] flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
+              {/* Sequoia Tip */}
+              <div className="flex items-start gap-3 flex-1">
+                <div className="w-9 h-9 rounded-[10px] bg-[var(--blue-soft)] text-[var(--blue)] flex items-center justify-center shrink-0 mt-0.5">
+                  <Settings2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-[0.88rem] font-semibold text-[var(--fg)]">
-                    100% Private, Native & Auditable
+                  <h4 className="text-[0.88rem] font-semibold text-[var(--fg)] flex items-center gap-2">
+                    <span>On macOS 15 Sequoia?</span>
+                    <span className="text-[0.7rem] px-2 py-0.5 rounded-full bg-[var(--elev)] border border-[var(--line)] text-[var(--muted)] font-normal">
+                      System Settings Method
+                    </span>
                   </h4>
-                  <p className="text-[0.8rem] text-[var(--muted)] mt-0.5">
-                    Zero telemetry, no background analytics, and no cloud upload. Everything executes locally on Apple Silicon & Intel.
+                  <p className="text-[0.8rem] text-[var(--muted)] mt-0.5 leading-relaxed">
+                    If the dialog doesn&apos;t show &ldquo;Open Anyway&rdquo;, open <strong className="text-[var(--fg)]">System Settings</strong> → <strong className="text-[var(--fg)]">Privacy &amp; Security</strong>, scroll down to Security, and click <strong className="text-[var(--fg)]">Open Anyway</strong>.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 self-start sm:self-center shrink-0 px-3 py-1.5 rounded-[8px] border border-[var(--line)] text-[0.78rem] text-[var(--muted)] bg-[var(--elev)]">
-                <Settings2 className="w-3.5 h-3.5 text-[var(--blue)] shrink-0" />
-                <span>macOS Sequoia: Also in <strong>Privacy & Security</strong></span>
+              {/* Privacy Pill */}
+              <div className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-[12px] border border-[var(--line)] bg-[var(--elev)] shrink-0 shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-[var(--ok)] shrink-0" />
+                <span className="text-[0.78rem] font-medium text-[var(--muted)]">
+                  100% Offline &amp; On-Device · Zero Telemetry
+                </span>
               </div>
             </div>
           </div>

@@ -76,7 +76,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
             <div className="flex items-start gap-3">
               <span className="w-5 h-5 rounded-full bg-[var(--ok)] text-white text-[0.7rem] font-bold grid place-items-center shrink-0 mt-0.5">3</span>
               <p className="text-[var(--muted)] leading-relaxed">
-                Click <strong className="text-[var(--fg)]">Open Anyway</strong>. macOS saves this permanently.
+                Click <strong className="text-[var(--fg)]">Open Anyway</strong> (or allow under <strong className="text-[var(--fg)]">System Settings → Privacy &amp; Security</strong> on Sequoia). macOS saves this permanently.
               </p>
             </div>
           </div>
