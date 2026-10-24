@@ -46,6 +46,14 @@ export const metadata: Metadata = {
       "Convert files where they are. Shift-drag on the Desktop or in Finder. A radial menu converts beside your originals — nothing leaves your Mac.",
     url: "https://fettle.itsadee.com",
     siteName: "Fettle",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fettle for Mac — Convert files where they are with Shift-drag radial menu",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
@@ -54,6 +62,7 @@ export const metadata: Metadata = {
     title: "Fettle — Your files, in good shape",
     description:
       "Convert files where they are. Shift-drag on the Desktop or in Finder. On-device, 100% private.",
+    images: ["/og-image.png"],
     creator: "@itsadee",
   },
   icons: {
